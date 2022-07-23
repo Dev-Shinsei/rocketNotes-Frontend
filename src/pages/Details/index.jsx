@@ -1,13 +1,16 @@
 import { Container } from "./styles";
+
+import { Header } from "../../components/Header";
+import { Button } from "../../components/Button";
+
 export function Details() {
   return (
     <Container>
       <h1>Hello World</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
-        possimus quo beatae nulla in ea cupiditate libero, nisi, delectus esse
-        pariatur. Corrupti autem maiores rem magnam ipsam dicta hic quas?
-      </p>
+      <p>Carlos Gomes</p>
+      <Header />
+
+      <Button title="Voltar" />
     </Container>
   );
 }
