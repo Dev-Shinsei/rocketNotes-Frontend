@@ -1,21 +1,17 @@
 import { useState } from "react";
+import { Container, Form, Avatar } from "./styles";
 import { FiArrowLeft, FiUser, FiMail, FiLock, FiCamera } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../hooks/auth";
-
 import { api } from "../../services/api";
 import avatarPlaceholder from "../../assets/avatar_placeholder.svg";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 
-import { Container, Form, Avatar } from "./styles";
-
 export function Profile() {
   const { user, updateProfile } = useAuth();
-  const [loading, setLoading] = useState(false);
-
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [passwordOld, setPasswordOld] = useState();
@@ -27,18 +23,23 @@ export function Profile() {
   const [avatar, setAvatar] = useState(avatarUrl);
   const [avatarFile, setAvatarFile] = useState(null);
 
+  const navigate = useNavigate();
+
+  function handleBack() {
+    navigate(-1);
+  }
+
   async function handleUpdate() {
     const updated = {
       name,
       email,
-      old_password: passwordOld,
       password: passwordNew,
+      old_password: passwordOld,
     };
 
-    setLoading(true);
     const userUpdated = Object.assign(user, updated);
+
     await updateProfile({ user: userUpdated, avatarFile });
-    setLoading(false);
   }
 
   function handleChangeAvatar(event) {
@@ -52,9 +53,9 @@ export function Profile() {
   return (
     <Container>
       <header>
-        <Link to="/">
-          <FiArrowLeft />
-        </Link>
+        <button type="button" onClick={handleBack}>
+          <FiArrowLeft size={24} />
+        </button>
       </header>
 
       <Form>
@@ -63,7 +64,6 @@ export function Profile() {
 
           <label htmlFor="avatar">
             <FiCamera />
-
             <input id="avatar" type="file" onChange={handleChangeAvatar} />
           </label>
         </Avatar>
@@ -77,7 +77,7 @@ export function Profile() {
         />
 
         <Input
-          placeholder="E-mail"
+          placeholder="Email"
           type="text"
           icon={FiMail}
           value={email}
@@ -92,17 +92,13 @@ export function Profile() {
         />
 
         <Input
-          placeholder="Nova senha"
+          placeholder="Nova senha "
           type="password"
           icon={FiLock}
           onChange={(e) => setPasswordNew(e.target.value)}
         />
 
-        <Button
-          disabled={loading}
-          title={loading ? "Salvando..." : "Salvar"}
-          onClick={handleUpdate}
-        />
+        <Button title="Salvar" onClick={handleUpdate} />
       </Form>
     </Container>
   );
