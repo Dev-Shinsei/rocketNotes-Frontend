@@ -13,6 +13,10 @@ export const Container = styled.div`
       color: ${({ theme }) => theme.COLORS.GRAY_100};
       font-size: 24px;
     }
+    button {
+      background: none;
+      border: none;
+    }
   }
 `;
 
@@ -30,10 +34,9 @@ export const Avatar = styled.div`
   width: 186px;
   height: 186px;
   > img {
+    border-radius: 50%;
     width: 186px;
     height: 186px;
-    border-radius: 50%;
-    object-fit: cover;
   }
   > label {
     width: 48px;
@@ -50,6 +53,7 @@ export const Avatar = styled.div`
     input {
       display: none;
     }
+
     svg {
       width: 20px;
       height: 20px;
